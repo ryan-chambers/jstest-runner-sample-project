@@ -1,8 +1,6 @@
-var field;
-
 module("validation", {
 	setup : function() {
-        field = $('#test_field');
+        this.field = $('#test_field');
 		validation.reset();
 	},
 	tearDown: function () {
@@ -16,8 +14,7 @@ function testFakeUserValidationWithResponse(responseCode, testHandler) {
         server.respondWith([
     	 	200,
     	 	{ "Content-Type": "text/xml" },
-    	 	'<?xml version="1.0" encoding="UTF-8"?><username>' + responseCode + '</username>'
-
+    	 	'<?xml version="1.0" encoding="UTF-8"?><result>' + responseCode + '</result>'
     	]);
 
     	testHandler(server);
@@ -27,21 +24,22 @@ function testFakeUserValidationWithResponse(responseCode, testHandler) {
 }
 
 test("validateAlphaNumeric valid", function() {
-	field.val('aB1');
-	var isValid = validation.validateAlphaNumeric(field);
+	this.field.val('aB1');
+	var isValid = validation.validateAlphaNumeric(this.field);
 	equal(isValid, true, "aB1 should be a valid alphanumeric value");
 });
 
 test("validateAlphaNumeric invalid", function() {
-	field.val('!');
-	var isValid = validation.validateAlphaNumeric(field);
+	this.field.val('!');
+	var isValid = validation.validateAlphaNumeric(this.field);
 	equal(isValid, false, "! should not be a valid alphanumeric value");
 });
 
 test("validateUsername user name already used", function() {
-	testFakeUserValidationWithResponse('error : username already used', function(server) {
+	var that = this;
+	testFakeUserValidationWithResponse('username_already_used', function(server) {
 
-    	validation.validateUsername(field);
+    	validation.validateUsername(that.field);
 
     	server.respond();
 
@@ -50,34 +48,11 @@ test("validateUsername user name already used", function() {
 	});
 });
 
-test("validateUsername invalid characters", function() {
-	testFakeUserValidationWithResponse('error : username contains invalid characters', function(server) {
-
-    	validation.validateUsername(field);
-
-    	server.respond();
-
-    	var isUsernameValid = validation.isUsernameValid();
-    	equal(isUsernameValid, false, "should have got username contains invalid characters error");
-	});
-});
-
-test("validateUsername username has spaces", function() {
-	testFakeUserValidationWithResponse('error : username contains spaces', function(server) {
-
-    	validation.validateUsername(field);
-
-    	server.respond();
-
-    	var isUsernameValid = validation.isUsernameValid();
-    	equal(isUsernameValid, false, 'should have got username has spaces error');
-	});
-});
-
 test("validateUsername valid", function() {
+	var that = this;
 	testFakeUserValidationWithResponse('valid', function(server) {
 
-    	validation.validateUsername(field);
+    	validation.validateUsername(that.field);
 
     	server.respond();
 
