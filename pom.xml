@@ -4,9 +4,12 @@
 	<groupId>rchambers</groupId>
 	<artifactId>jstest-runner-sample-project</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.1</version>
 	<name>jstest-runner Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/ryan-chambers/jstest-runner-sample-project</url>
+	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -72,20 +75,29 @@
 			</testResource>
 		</testResources>
 		<plugins>
+	    	<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>3.1</version>
+		        <configuration>
+		        	<source>1.6</source>
+		        	<target>1.6</target>
+		        </configuration>
+	      	</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.9</version>
+				<version>2.16</version>
 				<configuration>
 					<systemPropertyVariables>
-						<org.codehaus.jstestrunner.commandPattern>C:/phantomjs-1.3.0-win32-static/phantomjs.exe '%1$s' %2$s</org.codehaus.jstestrunner.commandPattern>
+						<org.codehaus.jstestrunner.commandPattern>phantomjs '%1$s' %2$s</org.codehaus.jstestrunner.commandPattern>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.4.2.v20110526</version>
+				<version>8.1.14.v20131031</version>
 				<configuration>
 					<webAppConfig>
 						<contextPath>/</contextPath>
@@ -95,7 +107,10 @@
 						</resourceBases>
 					</webAppConfig>
 				</configuration>
-			</plugin>
+			 </plugin>
 		</plugins>
 	</build>
+	<scm>
+		<url>https://github.com/ryan-chambers/jstest-runner-sample-project</url>
+	</scm>
 </project>
