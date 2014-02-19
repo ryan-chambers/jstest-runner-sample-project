@@ -27,3 +27,14 @@ To run the tests in eclipse, you'll need to change the test runner and add this 
 -Dorg.codehaus.jstestrunner.commandPattern="C:/phantomjs-1.3.0-win32-static/phantomjs.exe '%1$s' %2$s"
 
 See the screenshot runasconfig.png.
+
+
+Release Notes
+-------------
+
+v1.1
+
+Feb 18, 2014
+- Updated software versions 
+- Updated maven dependencies
+- Tested against phantomjs version 1.9.7 
